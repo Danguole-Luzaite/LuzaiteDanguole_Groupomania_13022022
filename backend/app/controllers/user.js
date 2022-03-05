@@ -3,24 +3,36 @@ const User = db.user;
 //const Op = db.Sequelize.Op;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+//const passwordValidator = require('password-validator');
+//const passwordvalidatorSchema = new passwordValidator();
+const emailValidator = require("email-validator");
 require('dotenv').config();
 
 
-//créer un nouvel utilisateur
+//Créer un nouvel utilisateur :
 exports.create = (req, res, next) => {
-// se rassurer que le mode pass est valide
-
+/*// se rassurer que le mot de pass est valide
+  if(passwordvalidatorSchema.validate(req.body.password)){
+    next();
+  }else{
+    console.log(passwordvalidatorSchema.validate('req.body.password', { details: true }))
+    return res.status(400).json({error: 'besoin de créer un mot de passe plus fort'})
+  }
 // se rassurer que l'email est valide
-
-// verifier que le compte n'existe pas deja
+  if(emailValidator.validate(req.body.email)){
+    next();
+  }else{
+    return res.status(400).json({error: "la structure de l'e-mail n'est pas correcte ! "})
+  }*/
+// vérifier que le compte n'existe pas déjà
   User.findOne({
     where: {
       email: req.body.email
     }
   }).then((user) => {
-    if (user) return res.status(401).json({ message: 'utilisateur existe deja' })
+    if (user) return res.status(401).json({ message: 'utilisateur existe déjà' })
   })
-// creer le compte si tous sont correct  
+// créer le compte si tous sont correct  
   bcrypt.hash(req.body.password, 10)
   .then(hash => {      
       User.create({
@@ -33,4 +45,35 @@ exports.create = (req, res, next) => {
       .catch(error => res.status(400).json({ error }));
   })
   .catch(error => res.status(500).json({ error }));
+};
+
+
+//Se connecter au compte utilisateur existant :
+exports.login = (req, res, next) => {
+  //vérifier que l'utilisateur existe
+  User.findOne({ where: {email: req.body.email} })
+    .then((user) => {
+      if (!user) {
+        return res.status(401).json({ error: 'Utilisateur non trouvé !' })
+      }
+      //valider que le mot de passe est correct
+      bcrypt.compare(req.body.password, user.password)
+        .then(valid => {
+          if (!valid) {
+            return res.status(401).json({ error: 'Le mot de passe est invalide !' });
+          }
+          //test on console.log print userID
+          console.log('userId:' , user.userId);
+          res.status(200).json ({
+            userId: user.userId,
+            token: jwt.sign(
+              { "userId": user.userId },
+              process.env.SECRET_TOKEN,
+              { expiresIn: '24h'} // expire dans 24 heures
+            )
+          });
+        })
+        .catch(error => res.status(500).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error })); 
 };
