@@ -31,8 +31,7 @@
                   >
                   </v-text-field>
                 </validation-provider>
-
-                <p class="text-right mt-2"><a href="#">Mot de passe oublié ?</a></p>
+<!--                <p class="text-right mt-2"><a href="#">Mot de passe oublié ?</a></p> -->
                 <v-card-actions>
                   <v-btn type="submit" :disabled="invalid" block dark color="orange darken-4">Se Connecter</v-btn>
                 </v-card-actions>
