@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 require('dotenv').config();
+const path = require('path');
 const cors = require("cors");
 var corsOptions = {
   origin: "http://localhost:8080"
@@ -18,10 +19,12 @@ app.use(express.urlencoded({ extended: true }));
 
 //routes
 const userRoutes = require('./app/routes/user');
-//const postRoutes = require('./app/routes/post');
+const postRoutes = require('./app/routes/post');
 
-app.use('/api', userRoutes);
-//app.use('/api/posts', postRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images'))); // static images folder
+
+app.use('/api', userRoutes); // User
+app.use('/api', postRoutes); // Post
 
 
 module.exports = app;

@@ -7,6 +7,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
+
 let sequelize;
 sequelize = new Sequelize(config.database, config.username, config.password, config);
 
@@ -23,17 +24,20 @@ db.post.belongsTo(db.user, {
     allowNull: false
   }
 }); // a partir de utilisateur
+
+/*
 db.comment.belongsTo(db.user, {
   foreignKey: {
     name: 'userId',
     allowNull: false
   }
-}); // 
+}); // */
 db.comment.belongsTo(db.post, {
   foreignKey: {
     name: 'postId',
     allowNull: false
   }
 });
+
 
 module.exports = db;

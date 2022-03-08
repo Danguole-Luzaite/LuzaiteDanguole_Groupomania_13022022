@@ -1,3 +1,5 @@
+const db = require(".");
+
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define("Comment", {
     commentId: {

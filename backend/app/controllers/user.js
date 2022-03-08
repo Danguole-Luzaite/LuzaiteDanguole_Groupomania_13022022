@@ -1,12 +1,12 @@
 const db = require("../models");
 const User = db.user;
-//const Op = db.Sequelize.Op;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 //const passwordValidator = require('password-validator');
 //const passwordvalidatorSchema = new passwordValidator();
 const emailValidator = require("email-validator");
 require('dotenv').config();
+
 
 
 //Créer un nouvel utilisateur :
@@ -62,8 +62,7 @@ exports.login = (req, res, next) => {
           if (!valid) {
             return res.status(401).json({ error: 'Le mot de passe est invalide !' });
           }
-          //test on console.log print userID
-          console.log('userId:' , user.userId);
+          console.log('userId:' , user.userId); //test on console.log print userID
           res.status(200).json ({
             userId: user.userId,
             token: jwt.sign(
