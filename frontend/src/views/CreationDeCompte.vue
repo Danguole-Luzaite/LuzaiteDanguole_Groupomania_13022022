@@ -65,6 +65,11 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
+  methods: {
+    handleSubmit() {
+        this.$refs.observer.validate()
+    },
+  },
 };
 </script>
 
