@@ -55,6 +55,10 @@ setInteractionMode('eager');
 export default {
   name: 'CreationDeCompte',
   data: () => ({
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
       rules: [
         value => !!value || 'Required.',
       ],
