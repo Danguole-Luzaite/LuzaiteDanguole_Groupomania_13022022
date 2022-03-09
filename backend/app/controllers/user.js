@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 //const passwordValidator = require('password-validator');
 //const passwordvalidatorSchema = new passwordValidator();
-const emailValidator = require("email-validator");
+//const emailValidator = require("email-validator");
 require('dotenv').config();
 
 

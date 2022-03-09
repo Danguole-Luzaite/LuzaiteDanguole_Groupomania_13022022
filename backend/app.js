@@ -7,6 +7,7 @@ var corsOptions = {
   origin: "http://localhost:8080"
 };
 
+
 // synchronise tous les modèles avec la base de données
 const db = require("./app/models");
 db.sequelize.sync({ force: false });
