@@ -22,7 +22,10 @@
                   <validation-provider name="Password" v-slot="{ errors }" rules="required">
                     <v-text-field label="Mot de passe" v-model="password" :error-messages="errors" type="password" required></v-text-field>
                   </validation-provider>
-                  <v-btn type="submit" :disabled="invalid" dark  style="color: #000 !important" class="createAccount" color="orange darken-4" block @click="submitNewAccount">
+                  <v-btn type="submit" :disabled="invalid" 
+                  dark  style="color: #000 !important" 
+                  class="createAccount" color="orange darken-4" block 
+                  @click="submitNewAccount">
                     Créer mon compte
                   </v-btn>
                 </v-form>
@@ -93,8 +96,8 @@ export default {
 
   methods: {
     submitHandler() {
-      this.$refs.observer.validate(),
-      alert('Le formulaire a été soumis!');
+      this.$refs.observer.validate(); 
+      //alert('Le formulaire a été soumis!');
       //console.log(this.name, this.surname, this.email, this.password); //test 
     },
 
@@ -105,13 +108,13 @@ export default {
         email: this.email,
         password: this.password
       })
-      .then(function (response) {
+      .then(function (response) { 
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       })
-    
+      this.$router.push({ name: 'Connexion' })
     }
   },
 };
