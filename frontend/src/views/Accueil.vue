@@ -33,10 +33,8 @@
                 <v-card-text class="d-flex">
                   <v-avatar color="grey lighten-2" size="50" class="mr-5" ></v-avatar>
                   <v-card-actions>
-                    <router-link to="" class="text-decoration-none">
-                      <v-btn color="grey darken-4" block large  class="white--text">Publier une image/Gif</v-btn>
-                    </router-link>
-                    </v-card-actions>
+                    <create-new-post/>
+                  </v-card-actions>
                 </v-card-text>
               </v-card>
 
@@ -61,6 +59,7 @@
 <script>
 import UserListCard from '../components/UserListCard.vue';
 import UsersSignedIn from '../components/UsersSignedIn.vue';
+import CreateNewPost from '../components/CreateNewPost.vue';
 
 export default {
   name: 'Accueil',
@@ -71,6 +70,7 @@ export default {
   components: {
     UserListCard,
     UsersSignedIn,
+    CreateNewPost,
   },
   methods: {
 
