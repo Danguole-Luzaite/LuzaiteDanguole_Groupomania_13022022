@@ -7,22 +7,22 @@
       <v-card-title>Créer un nouveau post</v-card-title>
       <v-card-text>
         <v-container>
-          <validationObserver ref="observer">
-            <v-form>
+          <validationObserver ref="observer" v-slot="{ invalid }">
+            <v-form  @submit.prevent="handleSubmit">
               <validation-provider name="PostTitle">
-                <v-text-field clearable label="Titre du poste" v-model="postTitle"></v-text-field>
+                <v-text-field clearable label="Titre du poste" v-model="title"></v-text-field>
               </validation-provider>
               <validation-provider name="Message">
-                <v-textarea clearable outlined auto-grow v-model="postMessage" label="Texte du message"></v-textarea>
+                <v-textarea clearable outlined auto-grow v-model="message" label="Texte du message"></v-textarea>
               </validation-provider>
               <validation-provider name="Image">
-                <v-file-input outlined accept="image/*" v-model="postImage" label="Publier une image"></v-file-input>
+                <v-file-input outlined accept="image/*" v-model="image" label="Publier une image"></v-file-input>
               </validation-provider>
               <v-divider></v-divider>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="grey darken-4" text @click="dialog = false">Fermer</v-btn>
-                <v-btn type="submit" color="orange darken-4" text @click="submitPost">Postuler</v-btn>
+                <v-btn type="submit" :disabled="invalid" color="orange darken-4" text @click="submitPost, dialog = false">Postuler</v-btn>
               </v-card-actions>
             </v-form>
           </validationObserver>
@@ -35,14 +35,47 @@
 
 
 <script>
+import { ValidationObserver, ValidationProvider } from 'vee-validate';
+// Axios
+const axios = require('axios');
+const instance = axios.create({
+  baseURL: 'http://localhost:3000/api'
+});
+
+
 export default {
   name: 'CreateNewPost',
   data: () => ({
     dialog: false,
+    title: '',
+    message: '',
+    image: '',
+
   }),
 
-  methods: {
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+  },
 
+  methods: {
+    handleSubmit() {
+        this.$refs.observer.validate()
+    },
+
+    submitPost(){
+      instance.post('/posts', {
+        postTitle: this.title,
+        postMessage: this.message,
+        postImage: this.image
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+    }
   },
 };
 </script>

@@ -1,13 +1,13 @@
 <template>
  
-  <div id="Accueil">
+  <div id="Accueil" class="grey lighten-3">
     <v-app-bar app color="orange darken-4" elevation="1" dark>
       <span><v-img max-height="130" contain src="@/assets/logos/icon-left-font-monochrome-white.png"></v-img></span>
       <v-spacer></v-spacer>
       <v-tabs right icons-and-text background-color="orange darken-4" class="mr-10">
         <v-tab text>Accueil<v-icon>home</v-icon></v-tab>
-        <v-tab text>Mon profil<v-icon>account_circle</v-icon></v-tab>
-        <v-tab text>Se déconnecter<v-icon>logout</v-icon></v-tab>
+        <v-tab text @click="goToProfile">Mon profil<v-icon>account_circle</v-icon></v-tab>
+        <v-tab text @click="backToLogin">Se déconnecter<v-icon>logout</v-icon></v-tab>
       </v-tabs> 
     </v-app-bar>
 
@@ -29,9 +29,11 @@
               <v-card-title class="justify-center">Les postes</v-card-title>
               <v-divider></v-divider>
               <!-- Card : Déposer un nouveau post -->
-              <v-card color="orange darken-4" class="px-4">
-                <v-card-text class="d-flex">
-                  <v-avatar color="grey lighten-2" size="50" class="mr-5" ></v-avatar>
+              <v-card color="orange darken-4">
+                <v-card-text class="d-flex" align-center>
+                  <v-avatar color="grey lighten-2" size="44" class="mr-5">
+                    <v-img src='../assets/default_avatar.png'></v-img>
+                  </v-avatar>
                   <v-card-actions>
                     <create-new-post/>
                   </v-card-actions>
@@ -73,11 +75,17 @@ export default {
     CreateNewPost,
   },
   methods: {
-
+    goToProfile() {
+      this.$router.push({ name: 'Profil' })
+    },
+    backToLogin() {
+      this.$router.push({ name: 'Connexion' })
+    },
   },
 };
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
+
 </style>
