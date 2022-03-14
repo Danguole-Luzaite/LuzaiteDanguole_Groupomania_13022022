@@ -1,6 +1,6 @@
 <template>
   <div id="UserListCard">
-    <v-card app max-width="400" class="mx-auto" outlined>
+    <v-card app max-width="400" class="mx-auto" outlined elevation="1">
       <v-list>
         <v-list-item v-for="item in items" :key="item.title">
           <v-list-item-content>

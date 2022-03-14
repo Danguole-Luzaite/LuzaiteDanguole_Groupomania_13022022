@@ -1,6 +1,6 @@
 <template>
   <div id="UsersSignedIn">
-    <v-card app max-width="400" class="mx-auto" outlined>
+    <v-card app max-width="400" class="mx-auto" outlined elevation="1">
       <v-list>
         <v-list-item v-for="chat in online" :key="chat.title">
           <v-list-item-avatar>
