@@ -30,12 +30,31 @@ exports.createPost = (req, res, next) => {
 };
 
 
-
-/*// Modifier un Post par l'id :
-exports.modifyPost = (req, res, next) => {
-
+//Récupérer un seul post :
+exports.getOnePost = (req, res, next) => {
+  Post.findByPk(req.params.postId)
+  .then(data => {
+      if (data) {
+        res.status(200).send(data);
+      } else {
+        res.status(404).send({
+          message: `Impossible de trouver le post avec id=${req.params.postId}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Erreur lors de la récupération de Post avec id=" + req.params.postId
+      });
+  });
 };
 
+/*
+// Modifier un Post par l'id :
+exports.modifyPost = (req, res, next) => {
+  const id = req.params.postId;
+
+};
 
 
 //Supprimer un Post avec l'id spécifié :
