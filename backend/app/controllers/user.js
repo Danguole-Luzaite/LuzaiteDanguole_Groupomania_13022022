@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 //const passwordValidator = require('password-validator');
 //const passwordvalidatorSchema = new passwordValidator();
 //const emailValidator = require("email-validator");
+const Op = db.Sequelize.Op;
 require('dotenv').config();
 
 
@@ -78,4 +79,24 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
     })
     .catch(error => res.status(500).json({ error })); 
+};
+
+
+
+//Obtenir tous les utilisateurs:
+exports.getAllUsers = (req, res, next) => {
+  // définir la condition pour obtenir les utilisateurs existants par leur Id
+  const userExists = req.query.userId;
+  const userCondition = userExists ? { userExists: { [Op.like]: `%${userId}%` } } : null;
+  // obtenir tous les utilisateurs avec condition appliquée
+  User.findAll({ where: userCondition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "une erreur s'est produite lors de la récupération des utilisateurs!"
+      });
+    });
 };
