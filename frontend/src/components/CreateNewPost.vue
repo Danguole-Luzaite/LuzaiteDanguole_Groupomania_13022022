@@ -22,7 +22,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="grey darken-4" text @click="dialog = false">Fermer</v-btn>
-                <v-btn type="submit" :disabled="invalid" color="orange darken-4" text @click="submitPost, dialog = false">Postuler</v-btn>
+                <v-btn type="submit" :disabled="invalid" color="orange darken-4" text @click="submitPost">Postuler</v-btn>
               </v-card-actions>
             </v-form>
           </validationObserver>
@@ -64,10 +64,16 @@ export default {
     },
 
     submitPost(){
+      //console.log('je suis la')
       instance.post('/posts', {
         postTitle: this.title,
         postMessage: this.message,
-        postImage: this.image
+        userId: JSON.parse(localStorage.getItem("userId")),
+        //postImage: this.image
+      },{
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
       })
       .then(function (response) {
         console.log(response);

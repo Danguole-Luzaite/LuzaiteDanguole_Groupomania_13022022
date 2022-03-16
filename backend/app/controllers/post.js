@@ -49,14 +49,21 @@ exports.getOnePost = (req, res, next) => {
   });
 };
 
-/*
+
 // Modifier un Post par l'id :
 exports.modifyPost = (req, res, next) => {
-  const id = req.params.postId;
-
+  //trouver le post
+  Post.findOne({ where: { postId: req.body.postId } })
+  .then((post) => {
+      if (!post) {
+        return res.status(401).json({ error: 'Post non trouvé !' })
+      }
+  })
+  //modifier le post
+  Post.update({ where: { postId: req.params.postId} })
 };
 
-
+/*
 //Supprimer un Post avec l'id spécifié :
 exports.deletePost = (req, res, next) => {
 

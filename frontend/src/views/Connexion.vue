@@ -10,6 +10,7 @@
         <v-card elevation="4" max-width="550" class="mx-auto">          
             <v-card-title class="justify-center">Connexion</v-card-title>
             <v-card-text>
+              <p v-if="messageError">{{ messageAlert }}</p>
               <validationObserver ref="observer" v-slot="{ invalid }">
                 <v-form class="px-3" @submit.prevent="handleSubmit">
                   <validation-provider name="Email" >
@@ -69,7 +70,8 @@ const instance = axios.create({
 
 export default {
   name: 'Connexion',
-  data: () => ({
+  data () { return {
+
     email: '',
       emailRules: [
       v => !!v || 'Email ne peux pas être vide',
@@ -80,8 +82,11 @@ export default {
         v => !!v || 'Mot de passe ne peux pas être vide',
         v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'Le mot de passe doit contenir au moins une lettre minuscule, un chiffre, un caractère spécial et une lettre majuscule',
       ],
-  }),
-
+    messageError: false,
+    messageAlert: '' , 
+    };
+  },
+  
   components: {
     TheNavigation,
     TheFooter,
@@ -98,15 +103,35 @@ export default {
         email: this.email,
         password: this.password
       })
-      .then(function (response) {
-        console.log(response);
+      .then((response) => {
+         console.log('response est:' , response);
+        if (response.status== 200) {
+          this.messageError = false;
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userId', response.data.userId);
+          localStorage.setItem('firstName', response.data.firstName);
+          localStorage.setItem('lastName', response.data.lastName);
+          localStorage.setItem('email', response.data.email);
+
+          this.$router.push({ name: 'Accueil' })
+        } else {
+          this.messageError = true;
+          
+        }
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        this.messageError = true;
+        this.messageAlert = 'utilisateur non trouve';
+        console.log('response est:' , error);
       })
-      this.$router.push({ name: 'Accueil' })
+      //this.$router.push({ name: 'Accueil' })
     },
+
   },
+
+  computed: {
+
+  }
 };
 </script>
 
