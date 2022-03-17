@@ -7,6 +7,7 @@
           <v-card-title class="justify-center">Modifier votre profil de membre</v-card-title>
           <v-divider class="my-1"></v-divider>
             <v-card-text>
+              <!-- form  -->
               <form action="" class="justify-center">
                 <v-card-actions class="d-flex flex-column">
                   <v-avatar class="profile" color="grey" size="150">
@@ -36,7 +37,8 @@ export default {
   name: 'Profil',
 
   data: () => ({
-
+    name: '',
+    lastname: '',
   }),
 
   components: {
