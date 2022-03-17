@@ -2,7 +2,7 @@ const db = require("../models");
 const Post = db.post;
 const User = db.user;
 let user = null;
-//const Op = db.Sequelize.Op;
+const Op = db.Sequelize.Op;
 const fs = require('fs');
 const path = require('path');
 
@@ -50,6 +50,26 @@ exports.getOnePost = (req, res, next) => {
 };
 
 
+//Récupérer tous les posts :
+exports.getAllPosts = (req, res, next) => {
+  //condition pour récupérer les posts
+  const postExists = req.query.postId;
+  const postCondition = postExists ? { postExists: { [Op.like]: `%${postId}%` } } : null;
+  // récupérer tous les posts avec condition appliquée
+  Post.findAll({ where: postCondition })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "une erreur s'est produite lors de la récupération des posts!"
+    });
+  });
+};
+
+
+/*
 // Modifier un Post par l'id :
 exports.modifyPost = (req, res, next) => {
   //trouver le post
@@ -61,7 +81,7 @@ exports.modifyPost = (req, res, next) => {
   })
   //modifier le post
   Post.update({ where: { postId: req.params.postId} })
-};
+};*/
 
 /*
 //Supprimer un Post avec l'id spécifié :

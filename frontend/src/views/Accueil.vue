@@ -1,19 +1,8 @@
 <template>
  
   <div id="Accueil">
-  
-    <v-app-bar app color="orange darken-4" dark>
-      <v-img max-height="130" contain src="@/assets/logos/icon-left-font-monochrome-white.png"></v-img>
-      <v-spacer></v-spacer>
-      <v-tabs right icons-and-text background-color="orange darken-4" class="mr-10">
-        <v-tab text>Accueil<v-icon>home</v-icon></v-tab>
-        <v-tab text @click="goToProfile">Mon profil<v-icon>account_circle</v-icon></v-tab>
-        <v-tab text @click="backToLogin">Se déconnecter<v-icon>logout</v-icon></v-tab>
-      </v-tabs> 
-    </v-app-bar>
-
+    <nav-accueil/>
     <v-main>
-
       <v-container fluid>
         <v-row class="mb-9">
           <!-- Liste des membres -->
@@ -54,8 +43,7 @@
             </v-card>
           </v-col>
         </v-row> 
-      </v-container>
-      
+      </v-container>     
     </v-main>
   </div> 
   
@@ -66,6 +54,7 @@ import UserListCard from '../components/UserListCard.vue';
 import UsersSignedIn from '../components/UsersSignedIn.vue';
 import CreateNewPost from '../components/CreateNewPost.vue';
 import ThePost from '../components/ThePost.vue';
+import navAccueil from '../components/NavigationAccueil.vue';
 
 export default {
   name: 'Accueil',
@@ -78,15 +67,9 @@ export default {
     UsersSignedIn,
     CreateNewPost,
     ThePost,
+    navAccueil,
   },
-  methods: {
-    goToProfile() {
-      this.$router.push({ name: 'Profil' })
-    },
-    backToLogin() {
-      this.$router.push({ name: 'Connexion' })
-    },
-  },
+  
 };
 </script>
 
