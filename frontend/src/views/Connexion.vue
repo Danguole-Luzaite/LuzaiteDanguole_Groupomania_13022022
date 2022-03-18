@@ -10,7 +10,7 @@
         <v-card elevation="4" max-width="550" class="mx-auto">          
             <v-card-title class="justify-center">Connexion</v-card-title>
             <v-card-text>
-              <p v-if="messageError">{{ messageAlert }}</p>
+              <v-alert dense type="error" v-if="messageError">{{ messageAlert }}</v-alert>
               <validationObserver ref="observer" v-slot="{ invalid }">
                 <v-form class="px-3" @submit.prevent="handleSubmit">
                   <validation-provider name="Email" >
@@ -121,7 +121,7 @@ export default {
       })
       .catch((error) => {
         this.messageError = true;
-        this.messageAlert = 'utilisateur non trouve';
+        this.messageAlert = 'utilisateur non trouvé';
         console.log('response est:' , error);
       })
       //this.$router.push({ name: 'Accueil' })

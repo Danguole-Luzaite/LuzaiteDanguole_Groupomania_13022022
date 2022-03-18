@@ -14,13 +14,13 @@
                     <v-img src='../assets/default_avatar.png'></v-img>
                   </v-avatar>
                   <v-btn small class="mt-2" >Modifier la photo de profil</v-btn>
-                  <v-card-title>User Prenom Nom</v-card-title>
+                  <v-card-title >{{ username }} {{ userlastname }}</v-card-title>
                 </v-card-actions>
                 <v-text-field clearable outlined dense v-model="name" placeholder="Modifier votre prénom"></v-text-field>
                 <v-text-field clearable outlined dense v-model="lastname" placeholder="Modifier votre nom" class="mb-6"></v-text-field>
                 <v-card-actions class="justify-space-between">
                   <v-btn @click="goBack">Annuler</v-btn>
-                  <v-btn disabled type="submit">Sauvegarder les modifications</v-btn>
+                  <v-btn  type="submit" @click="changeUserData">Sauvegarder les modifications</v-btn>
                 </v-card-actions>
               </form>
             </v-card-text>  
@@ -37,6 +37,10 @@ export default {
   name: 'Profil',
 
   data: () => ({
+    username: localStorage.getItem('firstName'),
+    userlastname: localStorage.getItem('lastName'),
+      
+    //v-model pour changer:
     name: '',
     lastname: '',
   }),
@@ -46,6 +50,10 @@ export default {
   },
 
   methods:{
+    changeUserData() {
+      
+    },
+
     goBack(){
       this.$router.push({ name: 'Accueil' })
     },

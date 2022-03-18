@@ -2,12 +2,12 @@
   <div id="UserListCard">
     <v-card app max-width="400" class="mx-auto" outlined elevation="1">
       <v-list>
-        <v-list-item v-for="item in users" :key="item.title" >
+        <v-list-item v-for="item in users" :key="item.userId" >
           <v-list-item-content>
-            <v-list-item-title v-text="item.title">{{ item.title }}</v-list-item-title>
+            <v-list-item-title>{{ item.firstName }} {{ item.lastName }}</v-list-item-title>
           </v-list-item-content>
           <v-list-item-avatar>
-            <v-img :src="item.avatar"></v-img>
+            <v-img :src="item.userAvatar"></v-img>
           </v-list-item-avatar>
         </v-list-item>
       </v-list>
@@ -26,26 +26,29 @@ export default {
   name: 'UserListCard',
 
   data () {
-    return {
-      users: [
-        {title: 'name', avatar: 'https://www.pikpng.com/pngl/m/80-805523_default-avatar-svg-png-icon-free-download-264157.png'},
+    return{
+       users:[
+      {
+        firstName: '',
+        lastName: '',
+        userAvatar: '',
+      },
       ],
     }
-  }, 
-
-  methods: {
-    showAllUsers() {
-      instance.get('/users', [
-        
-      ])
-      .then(response => {
-        console.log(response)
-        this.users = response.data
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    }
+   
   },
+
+  mounted() {
+    //Axios Api pour obtenir tous les users
+    instance.get('/users')
+    .then(response => {
+      return this.users = response.data;
+      //console.log(response.data)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  },
+
 };
 </script>

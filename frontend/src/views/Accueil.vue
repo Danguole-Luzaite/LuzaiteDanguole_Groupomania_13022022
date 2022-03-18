@@ -24,7 +24,9 @@
                   <v-avatar color="grey lighten-2" size="44" class="mr-5">
                     <v-img src='../assets/default_avatar.png'></v-img>
                   </v-avatar>
+                  <v-card-subtitle>{{ username }} {{ userlastname }}</v-card-subtitle>
                   <v-card-actions>
+                    <!-- component : createNewPost -->
                     <create-new-post/>
                   </v-card-actions>
                 </v-card-text>
@@ -32,14 +34,6 @@
               <v-divider class="mb-4"></v-divider>
               <!-- Afficher les postes créés ici -->
               <the-post/>
-            </v-card>
-          </v-col>
-          <!-- Membres en ligne -->
-          <v-col cols="12" sm="3">
-            <v-card min-height="268" class="deep-orange lighten-5" elevation="3">
-              <v-card-title class="justify-center">Membres en ligne</v-card-title>
-              <v-divider class="mb-2"></v-divider>
-              <users-signed-in/>
             </v-card>
           </v-col>
         </v-row> 
@@ -51,7 +45,6 @@
 
 <script>
 import UserListCard from '../components/UserListCard.vue';
-import UsersSignedIn from '../components/UsersSignedIn.vue';
 import CreateNewPost from '../components/CreateNewPost.vue';
 import ThePost from '../components/ThePost.vue';
 import navAccueil from '../components/NavigationAccueil.vue';
@@ -59,12 +52,12 @@ import navAccueil from '../components/NavigationAccueil.vue';
 export default {
   name: 'Accueil',
   data: () => ({
-    
+    username: localStorage.getItem('firstName'),
+    userlastname: localStorage.getItem('lastName'),
   }),
 
   components: {
     UserListCard,
-    UsersSignedIn,
     CreateNewPost,
     ThePost,
     navAccueil,
