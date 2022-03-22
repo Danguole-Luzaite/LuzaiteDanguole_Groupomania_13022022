@@ -73,15 +73,24 @@ exports.getAllPosts = (req, res, next) => {
 // Modifier un Post par l'id :
 exports.modifyPost = (req, res, next) => {
   //trouver le post
-  Post.findOne({ where: { postId: req.body.postId } })
+  Post.findByPk({ where: { postId: req.body.postId } })
   .then((post) => {
       if (!post) {
         return res.status(401).json({ error: 'Post non trouvé !' })
       }
   })
   //modifier le post
-  Post.update({ where: { postId: req.params.postId} })
-};*/
+  Post.update(
+    {postTitle: req.body.postTitle,
+    postMessage: req.body.postMessage,
+    postImage: req.body.postImage,
+    },
+    { where: { postId: req.params.postId} }
+  )
+  .then( () =>res.status(200).json({ message: 'Post modifié !'}))
+  .catch(error => res.status(400).json({ error }));
+};
+*/
 
 /*
 //Supprimer un Post avec l'id spécifié :

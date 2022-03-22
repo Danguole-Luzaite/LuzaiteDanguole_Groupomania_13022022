@@ -77,6 +77,10 @@ export default {
       })
       .then(function (response) {
         console.log(response);
+        if (response.status == 200){
+          this.$router.push({ name: 'Accueil' })
+        }
+        location.reload();
       })
       .catch(function (error) {
         console.log(error);

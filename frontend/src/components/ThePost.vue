@@ -2,7 +2,7 @@
   <v-container id="ThePost" fluid class="mb-5">
     <v-card app max-width="900" max-height="750" class="mx-auto mb-4" outlined elevation="2" v-for="post in posts.slice().reverse()" :key="post.postId">
       <v-row >
-        <v-avatar size="44">
+        <v-avatar size="44" class="ml-2 mt-1">
           <v-img src='../assets/default_avatar.png' ></v-img>
         </v-avatar>
         <v-card-subtitle>User Prenom Nom</v-card-subtitle>
@@ -16,7 +16,7 @@
           </v-btn>
         </v-card-actions>
       </v-row>
-      <v-divider class="mb-2"></v-divider>
+      <v-divider></v-divider>
 
       <v-card-text>
         <!-- place pour postTitle-->
