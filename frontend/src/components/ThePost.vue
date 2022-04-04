@@ -11,9 +11,7 @@
           <!-- dialog composant pour editer le post créé -->
           <update-post/>
           <!-- dialog composant pour supprimer le post créé -->
-          <v-btn icon elevation="1" small>
-              <v-icon>mdi-close</v-icon>
-          </v-btn>
+          <delete-post/>
         </v-card-actions>
       </v-row>
       <v-divider></v-divider>
@@ -43,6 +41,7 @@
 <script>
 import CreateComment from '../components/CreateComment.vue';
 import UpdatePost from '../components/UpdatePost.vue';
+import DeletePost from '../components/DeletePost.vue';
 
 // Axios
 const axios = require('axios');
@@ -67,6 +66,7 @@ export default {
   components: {
     CreateComment,
     UpdatePost,
+    DeletePost,
   },
 
   mounted() {

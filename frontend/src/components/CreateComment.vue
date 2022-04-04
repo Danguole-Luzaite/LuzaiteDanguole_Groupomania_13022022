@@ -1,5 +1,5 @@
 <template>
-  <v-dialog id="CreateComment" v-model="dialog" persistent max-width="450">
+  <v-dialog id="CreateComment" v-model="dialog" persistent max-width="550">
     <template v-slot:activator="{ on, attrs }">
       <v-btn icon elevation="1" v-bind="attrs" v-on="on">
         <v-icon color="grey">chat_bubble</v-icon>
