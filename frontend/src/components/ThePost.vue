@@ -8,9 +8,9 @@
         <v-card-subtitle>User Prenom Nom</v-card-subtitle>
         <v-spacer></v-spacer>
         <v-card-actions>
-          <v-btn icon color="grey" elevation="1" class="mx-2" small>
-              <v-icon>mdi-pencil</v-icon>
-          </v-btn>
+          <!-- dialog composant pour editer le post créé -->
+          <update-post/>
+          <!-- dialog composant pour supprimer le post créé -->
           <v-btn icon elevation="1" small>
               <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -29,18 +29,21 @@
       <v-divider class="mb-2"></v-divider>
       <!-- button icons pour aimer le post et postuler un comment-->
       <v-card-actions>
+        <!-- aimer le post -->
         <v-btn icon elevation="1" class="mx-2" color="deep-orange">
           <v-icon>mdi-thumb-up</v-icon>
         </v-btn>
-        <v-btn icon elevation="1">
-          <v-icon color="grey">chat_bubble</v-icon>
-        </v-btn>
+        <!-- postuler un comment-->
+        <create-comment/>
       </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script>
+import CreateComment from '../components/CreateComment.vue';
+import UpdatePost from '../components/UpdatePost.vue';
+
 // Axios
 const axios = require('axios');
 const instance = axios.create({
@@ -60,6 +63,10 @@ export default {
       }]
     }
 
+  },
+  components: {
+    CreateComment,
+    UpdatePost,
   },
 
   mounted() {
