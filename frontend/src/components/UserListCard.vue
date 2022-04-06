@@ -1,7 +1,6 @@
 <template>
   <div id="UserListCard">
     <v-card app max-width="400" class="mx-auto" outlined elevation="1">
-      <v-virtual-scroll :bench="benched" :items="items" :item-height="50" height="260">
         <v-list>
           <v-list-item v-for="item in users" :key="item.userId" >
             <v-list-item-content>
@@ -11,8 +10,8 @@
               <v-img :src="item.userAvatar"></v-img>
             </v-list-item-avatar>
           </v-list-item>
-        </v-list>
-      </v-virtual-scroll>  
+        </v-list> 
+        <router-link></router-link> 
     </v-card>
   </div>
 </template>
@@ -29,7 +28,6 @@ export default {
 
   data () {
     return{
-      benched: 5,
        users:[
       {
         firstName: '',
@@ -40,7 +38,7 @@ export default {
     }
    
   },
-  computed: {
+/*  computed: {
       items () {
         return Array.from({ length: this.users.length })
       },
@@ -48,7 +46,7 @@ export default {
         return 1000
       },
   },
-
+*/
 
   mounted() {
     //Axios Api pour obtenir tous les users

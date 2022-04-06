@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 const userRoutes = require('./app/routes/user');
 const postRoutes = require('./app/routes/post');
 
-app.use('/images', express.static(path.join(__dirname, 'images'))); // static images folder
+app.use('/app/images', express.static(path.join(__dirname, 'app/images'))); // static images folder
 
 app.use('/api', userRoutes); // User
 app.use('/api', postRoutes); // Post

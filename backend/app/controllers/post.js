@@ -16,12 +16,13 @@ exports.createPost = (req, res, next) => {
     } else {
       user = response.dataValues;
     //créer un nouveau post et enregistrer dans la DB
+    console.log('l image est: ', req.file);
     console.log("body est: ", req.body);
     Post.create({
       userId: user.userId,
       postTitle: req.body.postTitle,
       postMessage: req.body.postMessage,
-      postImage: (req.file)? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`: null
+      postImage: (req.file)? `${req.protocol}://${req.get('host')}/app/images/${req.file.filename}`: null
     })
     .then(() => res.status(201).json({ message: 'Post créé !' }))
     .catch(error => res.status(400).json({ error }));

@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     postImage:{
       type: DataTypes.STRING,
     },
-  }/*,{
+  },{
     sequelize,
     modelName: "Post"
-  }*/);
+  });
   return Post;
 };

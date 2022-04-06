@@ -89,7 +89,7 @@ exports.getAllUsers = (req, res, next) => {
   const userExists = req.query.userId;
   const userCondition = userExists ? { userExists: { [Op.like]: `%${userId}%` } } : null;
   // obtenir tous les utilisateurs avec condition appliquée
-  User.findAll({ where: userCondition })
+  User.findAll({ where: userCondition, })
     .then(data => {
       res.send(data);
     })

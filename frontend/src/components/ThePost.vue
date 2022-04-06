@@ -22,7 +22,7 @@
         <!-- place pour postMessage-->
         <v-card-text>{{ post.postMessage }}</v-card-text>
         <!-- place pour postImage-->
-        <v-img contain max-height="200" max-width="300" src='../assets/default_image.jpg'><!-- {{ post.postImage }} --></v-img>
+        <v-img contain max-height="200" max-width="300" v-bind:src="post.postImage"/>
       </v-card-text>
       <v-divider class="mb-2"></v-divider>
       <!-- button icons pour aimer le post et postuler un comment-->

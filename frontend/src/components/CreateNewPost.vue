@@ -16,7 +16,7 @@
                 <v-textarea clearable outlined auto-grow v-model="message" label="Texte du message"></v-textarea>
               </validation-provider>
               <validation-provider name="Image">
-                <v-file-input outlined accept="image/*" v-model="image" label="Publier une image"></v-file-input>
+                <v-file-input outlined accept="image/*" v-model="image" label="Publier une image" @change="selectFile()" ref="image"></v-file-input>
               </validation-provider>
               <v-divider></v-divider>
               <v-card-actions>
@@ -63,15 +63,20 @@ export default {
         this.$refs.observer.validate()
     },
 
+    selectFile() {
+      this.image = this.$ref.image.files[0];
+    },
+
     submitPost(){
       //console.log('je suis la')
-      instance.post('/posts', {
-        postTitle: this.title,
-        postMessage: this.message,
-        userId: JSON.parse(localStorage.getItem("userId")),
-        //postImage: this.image
-      },{
+      const formData = new FormData();
+      formData.append('postTitle', this.title);
+      formData.append('postMessage', this.message);
+      formData.append('image', this.image);
+      formData.append('userId', JSON.parse(localStorage.getItem("userId")));
+      instance.post('/posts', formData, {
         headers: {
+          'content-type': 'multipart/form-data',
           Authorization: "Bearer " + localStorage.getItem("token")
         }
       })
