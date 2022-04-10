@@ -10,11 +10,12 @@
         <v-container>
           <v-form>
             <v-row class="d-flex flex-column">
-              <v-text-field
+              <v-textarea
               label="Écrivez un commentaire..."
               outlined
-              clearable class="mb-2 mt-6" 
-              ></v-text-field>
+              clearable class="mb-2 mt-6"
+              auto-grow v-model="comment"
+              ></v-textarea>
               <v-card-actions>
                 <v-btn raised text class="mr-2" @click="dialog = false">Anuller</v-btn>
                 <v-btn raised text color="orange darken-4">Publier</v-btn>
