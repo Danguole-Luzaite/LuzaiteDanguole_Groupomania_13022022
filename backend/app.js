@@ -21,11 +21,13 @@ app.use(express.urlencoded({ extended: true }));
 //routes
 const userRoutes = require('./app/routes/user');
 const postRoutes = require('./app/routes/post');
+//const commentRoutes = require('./app/routes/comment');
 
 app.use('/app/images', express.static(path.join(__dirname, 'app/images'))); // static images folder
 
 app.use('/api', userRoutes); // User
 app.use('/api', postRoutes); // Post
+//app.use('/api', commentRoutes); // Comment
 
 
 module.exports = app;

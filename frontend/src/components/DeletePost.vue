@@ -16,7 +16,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="dialog = false">Anuller</v-btn>
-          <v-btn text color="orange darken-4">Supprimer</v-btn>
+          <v-btn text color="orange darken-4" @click="deleteThePost()">Supprimer</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -25,12 +25,32 @@
 
 <script>
 
+// Axios
+const axios = require('axios');
+
 
 export default {
   name: 'DeletePost',
   data() {
     return {
       dialog: false,
+    }
+  },
+
+  methods: {
+    deleteThePost() {
+      axios.delete('http://localhost:3000/api/{postId}', {
+        headers: {
+          'content-type': 'multipart/form-data',
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
     }
   },
 }

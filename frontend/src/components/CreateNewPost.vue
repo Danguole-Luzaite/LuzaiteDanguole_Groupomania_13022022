@@ -68,12 +68,12 @@ export default {
     },
 
     submitPost(){
-      //console.log('je suis la')
       const formData = new FormData();
       formData.append('postTitle', this.title);
       formData.append('postMessage', this.message);
       formData.append('image', this.image);
       formData.append('userId', JSON.parse(localStorage.getItem("userId")));
+      //axios method pour soumettre les données du nouveau post créé
       instance.post('/posts', formData, {
         headers: {
           'content-type': 'multipart/form-data',

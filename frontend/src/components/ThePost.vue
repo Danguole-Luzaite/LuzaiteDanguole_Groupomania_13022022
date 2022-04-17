@@ -5,7 +5,7 @@
         <v-avatar size="44" class="ml-2 mt-1">
           <v-img src='../assets/default_avatar.png' ></v-img>
         </v-avatar>
-        <v-card-subtitle>User Prenom Nom</v-card-subtitle>
+        <v-card-subtitle>{{ post.User.firstName }} {{ post.User.lastName }}</v-card-subtitle>
         <v-spacer></v-spacer>
         <v-card-actions>
           <!-- dialog composant pour editer le post créé -->
@@ -70,11 +70,10 @@ export default {
   },
 
   mounted() {
-    //Axios Api pour obtenir tous les users
+    //Axios Api pour obtenir tous les posts
     instance.get('/posts')
     .then(response => {
       return this.posts = response.data;
-      //console.log(response.data)
     })
     .catch(error => {
       console.log(error)
