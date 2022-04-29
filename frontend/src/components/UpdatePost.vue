@@ -2,8 +2,8 @@
   <v-dialog id="UpdatePost" v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn icon color="grey" elevation="1" class="mx-2" small v-bind="attrs" v-on="on">
-              <v-icon>mdi-pencil</v-icon>
-          </v-btn>
+        <v-icon>mdi-pencil</v-icon>
+      </v-btn>
     </template>
     <v-card>
       <v-card-title>Modifier votre post</v-card-title>
@@ -12,19 +12,20 @@
           <validationObserver ref="observer" v-slot="{ invalid }">
             <v-form>
               <validation-provider name="PostTitle">
-                <v-text-field clearable v-model="edit_title" label="Titre du poste"></v-text-field>
+                <v-text-field clearable v-model="post.postTitle" label="Titre du poste" ></v-text-field>
               </validation-provider>
               <validation-provider name="Message">
-                <v-textarea clearable outlined auto-grow v-model="edit_message" label="Texte du message"></v-textarea>
+                <v-textarea clearable outlined auto-grow v-model="post.postMessage" label="Texte du message" ></v-textarea>
               </validation-provider>
               <validation-provider name="Image">
-                <v-file-input outlined accept="image/*" v-model="edit_image"  @change="selectFile()" label="Publier une image" ref="image"></v-file-input>
+                <v-file-input outlined accept="image/*" v-model="post.postImage"  @change="selectFile()" label="Publier une image" ref="image" v-bind:src="post.postImage"></v-file-input>
+                <v-img contain max-height="200" max-width="300" v-bind:src="post.postImage"/>
               </validation-provider>
               <v-divider></v-divider>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="grey darken-4" text @click="dialog = false">Anuller</v-btn>
-                <v-btn type="submit" color="orange darken-4" text :disabled="invalid" @click="saveChanges">Enregistrer les modifications</v-btn>
+                <v-btn type="submit" color="orange darken-4" text :disabled="invalid" @click="saveChanges(post.postId)">Enregistrer les modifications</v-btn>
               </v-card-actions>
             </v-form>
           </validationObserver>
@@ -41,19 +42,22 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate';
 
 // Axios
 const axios = require('axios');
-/*const instance = axios.create({
-  baseURL: 'http://localhost:3000/api/'
-});*/
+
 
 export default {
   name: 'UpdatePost',
 
   data: () => ({
       dialog: false,
-      edit_title: '',
-      edit_message: '',
-      edit_image: '',
+      "post.postTitle": '',
+      "post.postMessage": '',
+      "post.postImage": '',
   }),
+
+  props:{
+    post: Object,
+    postId: Number
+  },
 
   components: {
       ValidationObserver,
@@ -62,24 +66,25 @@ export default {
 
   methods: {
     selectFile() {
-      this.edit_image = this.$ref.edit_image.files[0];
+      this.post.postImage = this.$ref.post.postImage.files[0];
     },
 
-    saveChanges() {
+    saveChanges(postId) {
+      //console.log(" post est modifie :", post)
       const formData = new FormData();
-      formData.append('postTitle', this.edit_title);
-      formData.append('postMessage', this.edit_message);
-      formData.append('image', this.edit_image);
+      formData.append('postTitle', this.post.postTitle);
+      formData.append('postMessage', this.post.postMessage);
+      formData.append('image', this.post.postImage);
       formData.append('userId', JSON.parse(localStorage.getItem("userId")));
-      //axios method pour modifier les données du poste
-      axios.put('http://localhost:3000/api/posts/{postId}', formData,
+      //axios method pour modifier les données du post
+      axios.put('http://localhost:3000/api/posts/'+postId, formData,
       {
         headers: {
           'content-type': 'multipart/form-data',
           Authorization: "Bearer " + localStorage.getItem("token")
         },
         params: {
-          postId : ''
+          postId
         }
       })
       .then(function (response) {

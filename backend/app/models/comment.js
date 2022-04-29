@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     commentMessage:{
       type: DataTypes.TEXT,
     },
-  }/*,{
+  },{
     sequelize,
     modelName: "Comment" 
-  }*/);
+  });
   return Comment;
 };

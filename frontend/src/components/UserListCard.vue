@@ -57,6 +57,7 @@ export default {
   data () {
     return{
       dialog: false,
+      showLessUsers: false,
        users:[
       {
         firstName: '',
@@ -67,10 +68,7 @@ export default {
     }
    
   },
-  computed: {
-  },
-
-
+  
   mounted() {
     //Axios Api pour obtenir tous les users
     instance.get('/users')

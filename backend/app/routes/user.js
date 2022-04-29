@@ -7,6 +7,7 @@ const userCtrl = require ('../controllers/user');
 router.post('/auth/create', /*passwordValidator,*/ userCtrl.create);
 router.post('/auth/login', userCtrl.login );
 router.get('/auth/users', userCtrl.getAllUsers );
+router.put('/auth/users/profile/:userId', userCtrl.updateUserProfile );
 
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const db = require("../models");
 const Post = db.post;
 const User = db.user;
+const Comment = db.comment;
 let user = null;
 const Op = db.Sequelize.Op;
 const fs = require('fs');
@@ -53,7 +54,8 @@ exports.getOnePost = (req, res, next) => {
 
 //Récupérer tous les posts :
 exports.getAllPosts = (req, res, next) => {
-  Post.findAll({ include: [User] })
+  Post.findAll({ include: [User, Comment ]
+  })
   .then(data => {
     res.send(data);
   })
@@ -79,23 +81,43 @@ exports.modifyPost = (req, res, next) => {
         if(post.userId !== req.auth.userId){
           return res.status(400).json({ error: new Error( 'La requête non autorisée' )}) }
           else{
-            //supprimer l'ancienne image du fichier;
-            
-            //modifier le post
-            Post.update({
-              postTitle: req.body.postTitle,
-              postMessage: req.body.postMessage,
-              postImage: (req.file)? `${req.protocol}://${req.get('host')}/app/images/${req.file.filename}`: null,
-              },
-              {
-                where: {
-                  postId: req.params.postId,
-                  userId: req.body.userId,
+            //supprimer l'ancienne image du fichier si postImage s'il n'est pas null, puis après, mettez à jour le post;
+            if(post.postImage !== null) {
+              const filename = post.postImage.split('/app/images/')[1];
+              fs.unlink(`app/images/${filename}`, () => {
+                //modifier le post
+                Post.update({
+                  postTitle: req.body.postTitle,
+                  postMessage: req.body.postMessage,
+                  postImage: (req.file)? `${req.protocol}://${req.get('host')}/app/images/${req.file.filename}`: null,
+                  },
+                  {
+                    where: {
+                      postId: req.params.postId,
+                      userId: req.body.userId,
+                    },
+                  }        
+                )
+                .then( () =>res.status(200).json({ message: 'Post modifié !'}))
+                .catch(error => res.status(400).json({ error }))
+              })
+            }else{
+              //modifier le post, si postImage est null
+              Post.update({
+                postTitle: req.body.postTitle,
+                postMessage: req.body.postMessage,
+                postImage: (req.file)? `${req.protocol}://${req.get('host')}/app/images/${req.file.filename}`: null,
                 },
-              }        
-            )
-            .then( () =>res.status(200).json({ message: 'Post modifié !'}))
-            .catch(error => res.status(400).json({ error }))
+                {
+                  where: {
+                    postId: req.params.postId,
+                    userId: req.body.userId,
+                  },
+                }        
+              )
+              .then( () =>res.status(200).json({ message: 'Post modifié !'}))
+              .catch(error => res.status(400).json({ error }))
+            } 
           }
       } 
   })
@@ -120,7 +142,7 @@ exports.deletePost = (req, res, next) => {
       //supprimer l'ancienne image du fichier si postImage s'il n'est pas null
       if(post.postImage !== null) {
         const filename = post.postImage.split('/app/images/')[1];
-        fs.unlink(`/app/images/${filename}`, () => {
+        fs.unlink(`app/images/${filename}`, () => {
           //supprimer le post, par postId
           Post.destroy({
             where: { postId: req.params.postId }

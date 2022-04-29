@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 //const passwordvalidatorSchema = new passwordValidator();
 //const emailValidator = require("email-validator");
 const Op = db.Sequelize.Op;
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
 
@@ -100,3 +102,30 @@ exports.getAllUsers = (req, res, next) => {
       });
     });
 };
+
+
+
+//modifier les données des utilisateurs (dans la page de profil):
+exports.updateUserProfile = (req, res, next) => {
+  //vérifier que l'utilisateur existe
+  User.findByPk(req.params.userId)
+  .then((user) => {
+    if (!user) {
+      return res.status(401).json({ error: 'Utilisateur non trouvé' })
+    }else{
+      //modifier l'utilisateur, add/change userAvatar
+      User.update({
+        userAvatar: (req.file)? `${req.protocol}://${req.get('host')}/app/images/${req.file.filename}`: null,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName 
+      },
+      {
+        where: { userId: req.body.userId }
+      }
+      )
+      .then( () =>res.status(200).json({ message: 'Utilisateur modifié !'}))
+      .catch(error => res.status(400).json({ error }))
+    }
+  })
+  .catch(error => res.status(500).json({ error }));
+}
