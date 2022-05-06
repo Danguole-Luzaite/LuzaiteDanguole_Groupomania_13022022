@@ -50,7 +50,7 @@ export default {
       axios.post('http://localhost:3000/api/comments', 
       {
         commentMessage: this.commentText,
-        userId: this.post.userId,
+        userId: JSON.parse(localStorage.getItem('userId')),
         postId: this.post.postId
       },
       {

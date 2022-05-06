@@ -54,17 +54,25 @@ exports.getCommentsByPostId = (req, res, next) => {
 // Supprimer un commentaire avec l'id spécifié :
 exports.deleteComment = (req, res, next) => {
   //vérifier que le commentaire existe
-  Comment.findByPk( req.params.commentId )
+  Comment.findOne({ where: {
+    commentId: req.params.commentId
+  }
+  })
   .then((comment) => {
     if (!comment){
       return res.status(404).json({ error: 'Commentaire non trouvé !' })
     }else{
+      if (comment.userId == req.params.userId){
+        Comment.destroy({
+          where: { commentId: req.params.commentId }
+        })
+        .then(() => res.status(200).json({ message: 'Le commentaire est supprimé !'}))
+        .catch(error => res.status(400).json({ error }))
+      }else{
+        return res.status(403).json({ error: 'Vous ne pas autorise supprimer ce commentaire'})
+      } 
       //supprimer commentaire, par commentId
-      Comment.destroy({
-        where: { commentId: req.params.commentId }
-      })
-      .then(() => res.status(200).json({ message: 'Le commentaire est supprimé !'}))
-      .catch(error => res.status(400).json({ error }))
+    
     }
   })
   .catch(error => res.status(500).json({ error }))

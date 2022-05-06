@@ -72,7 +72,7 @@ export default {
         postImage: '',
       },
       comments : Object,
-      firstName: '',
+      
     }
   },
 

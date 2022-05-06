@@ -10,7 +10,7 @@
         <!-- pour supprimer le comment créé -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn icon elevation="1" small @click="deleteTheComment(commentId)" :commentId="comment.commentId"><v-icon>mdi-close</v-icon></v-btn>
+          <v-btn icon elevation="1" small @click="deleteTheComment(comment.commentId)" ><v-icon>mdi-close</v-icon></v-btn>
         </v-card-actions>
       </v-row>
       <v-divider></v-divider>
@@ -28,13 +28,12 @@ export default {
   name: 'TheComment',
   data () {
     return {
-      commentId: 0,
-      comments: []
+      
+      comments: [],
     }
   },
 
   props:{
-    //commentId: Number,
     postId: Number,
   },
 
@@ -53,11 +52,11 @@ export default {
   methods: {
     //axios pour supprimer le comment par commentId
     deleteTheComment(commentId){
-      axios.delete('http://localhost:3000/api/comments/'+commentId, {
+      axios.delete('http://localhost:3000/api/comments/'+ commentId + '/' + JSON.parse(localStorage.getItem('userId')), {
         headers: {
-          'content-type': 'multipart/form-data',
+          'content-type': 'application/json',
           Authorization: "Bearer " + localStorage.getItem("token")
-        },
+        }
       })
       .then(response => {
         console.log(response);

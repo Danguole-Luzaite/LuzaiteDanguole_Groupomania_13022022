@@ -24,7 +24,7 @@
                   <v-avatar color="grey lighten-2" size="44" class="mr-5">
                     <v-img src='../assets/default_avatar.png'></v-img>
                   </v-avatar>
-                  <v-card-subtitle>{{ username }} {{ userlastname }}</v-card-subtitle>
+                  <v-card-subtitle>{{ user.firstName }} {{ user.lastName }}</v-card-subtitle>
                   <v-card-actions>
                     <!-- component : createNewPost -->
                     <create-new-post/>
@@ -48,13 +48,37 @@ import UserListCard from '../components/UserListCard.vue';
 import CreateNewPost from '../components/CreateNewPost.vue';
 import ThePost from '../components/ThePost.vue';
 import navAccueil from '../components/NavigationAccueil.vue';
+// Axios
+const axios = require('axios');
+
 
 export default {
   name: 'Accueil',
   data: () => ({
-    username: localStorage.getItem('firstName'),
-    userlastname: localStorage.getItem('lastName'),
+    userId: localStorage.getItem('userId'),
+    user: {},
+    "user.firstName": '',
+    "user.lastName": '',
+    //"user.userAvatar": '', 
+    
   }),
+
+  mounted(userId) {
+    //Axios Api pour obtenir seul utilisateur
+    axios.get('http://localhost:3000/api/auth/users/' + this.userId, 
+    {
+      params: {
+          userId
+        }
+    })
+    .then(response => {
+      //console.log(response.data)
+      return this.user = response.data;
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  },
 
   components: {
     UserListCard,
