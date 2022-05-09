@@ -4,24 +4,59 @@
     <v-main>
       <v-container fluid color="orange lighten-1" class="mt-15">
         <v-card app max-width="600" class="mx-auto" elevation="4" outlined>
-          <v-card-title class="justify-center">Modifier votre profil de membre</v-card-title>
+          <v-card-title class="justify-center">Votre profil de membre</v-card-title>
           <v-divider class="my-1"></v-divider>
             <v-card-text>
               <!-- form  -->
               <form  class="justify-center">
                 <v-card-actions class="d-flex flex-column">
                   <v-avatar class="profile" color="grey" size="150">
-                    <v-img v-bind:src="user.userAvatar"/>
+                    <v-img v-bind:src="user.userAvatar"  alt="image de profil"/>
                   </v-avatar>
-                  <v-btn  class="mt-2" accept="image/*" v-model="user.userAvatar" ref="image" @change="selectFile()" v-bind:src="user.userAvatar" >Modifier la photo de profil</v-btn>
-                  
+                  <!-- Modifier la photo, v-dialog -->
+                  <v-dialog v-model="dialog" persistent max-width="600px">
+                    <template v-slot:activator="{ on, attrs }"> 
+                      <v-btn  class="mt-2"  v-bind="attrs" v-on="on" >Modifier votre profil</v-btn>
+                    </template>
+                    <v-card>
+                      <v-card-title>Modifier la photo de profil</v-card-title>
+                      <!--<v-alert type="success" v-if="successAlert">Votre photo de profil a été modifié avec succès !</v-alert> -->
+                      <v-card-text>
+                        <v-container>
+                          <v-form>
+                             <!-- Modifier firstName et lastName -->
+                            <v-text-field clearable outlined dense v-model="user.firstName" placeholder="Modifier votre prénom"></v-text-field>
+                            <v-text-field clearable outlined dense v-model="user.lastName" placeholder="Modifier votre nom" class="mb-6"></v-text-field>
+                             <!-- Modifier userAvatar -->
+                            <v-file-input outlined accept="image/*" 
+                            v-model="user.userAvatar"
+                            @change="selectFile()"
+                            label="Modifier la photo"
+                            ref="image"
+                            v-bind:src="user.userAvatar"
+                            ></v-file-input>
+                            <v-img contain max-height="200" class="mb-4" v-bind:src="user.userAvatar"  alt="image de profil"/>
+                            <v-divider></v-divider>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn color="grey darken-4" text @click="dialog = false">Retourner</v-btn>
+                              <v-btn type="submit" color="orange darken-4" text  @click="changeUserData(userId)">Sauvegarder les modifications</v-btn>
+                            </v-card-actions>
+                          </v-form>
+                        </v-container>
+                      </v-card-text>
+                    </v-card>                   
+                  </v-dialog>
+                                  
                   <v-card-title >{{ user.firstName }} {{ user.lastName }}</v-card-title>
                 </v-card-actions>
-                <v-text-field clearable outlined dense v-model="user.firstName" placeholder="Modifier votre prénom"></v-text-field>
-                <v-text-field clearable outlined dense v-model="user.lastName" placeholder="Modifier votre nom" class="mb-6"></v-text-field>
+
+                
+                
+                <!--<v-alert type="success" v-if="successAlert">Votre profil a été modifié avec succès !</v-alert> -->
                 <v-card-actions class="justify-space-between">
-                  <v-btn @click="goBack">Annuler</v-btn>
-                  <v-btn  type="submit" @click="changeUserData(userId)">Sauvegarder les modifications</v-btn>
+                  <v-btn  block @click="goBack">Retourner à l'accueil</v-btn>
+                  <!--<v-btn  type="submit" @click="changeUserData(userId)">Sauvegarder les modifications</v-btn> -->
                 </v-card-actions>
               </form>
             </v-card-text>  
@@ -40,15 +75,17 @@ export default {
   name: 'Profil',
 
   data: () => ({
+    dialog: false,
     userId: localStorage.getItem('userId'),
     user: {},  
     //v-model pour changer:
     "user.firstName": '',
     "user.lastName": '',
     "user.userAvatar": '',
-
+    //successAlert: false,
+    
   }),
-
+  
 
   components: {
     navAccueil,
@@ -73,7 +110,7 @@ export default {
 
   methods:{
     selectFile() {
-      this.user.userAvatar = this.$ref.image.files[0];
+      this.user.userAvatar = this.$ref.user.userAvatar.files[0];
     },
 
     changeUserData(userId) {
@@ -95,7 +132,8 @@ export default {
       })
       .then(function (response) {
         console.log(response);
-        if (response.status == 200){
+        if (response.status == 200) {
+          //this.successAlert = true;
           location.reload();
         }
       })

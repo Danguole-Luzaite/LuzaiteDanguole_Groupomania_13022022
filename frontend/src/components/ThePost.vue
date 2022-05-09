@@ -3,7 +3,7 @@
     <v-card app max-width="900" max-height="750" class="mx-auto mb-4" outlined elevation="2" v-for="post in posts.slice().reverse()" :key="post.postId">
       <v-row >
         <v-avatar size="44" class="ml-2 mt-1">
-          <v-img src='../assets/default_avatar.png' ></v-img>
+          <v-img v-bind:src="post.User.userAvatar" alt="image de profil"/>
         </v-avatar>
         <v-card-subtitle>{{ post.User.firstName }} {{ post.User.lastName }}</v-card-subtitle>
         <v-spacer></v-spacer>
@@ -22,7 +22,7 @@
         <!-- place pour postMessage-->
         <v-card-text>{{ post.postMessage }}</v-card-text>
         <!-- place pour postImage-->
-        <v-img contain max-height="200" v-bind:src="post.postImage"/>
+        <v-img contain max-height="200" v-bind:src="post.postImage" alt="image de post"/>
       </v-card-text>
       <v-divider class="mb-2"></v-divider>
       <!-- button icons pour aimer le post et postuler un comment-->
@@ -72,6 +72,7 @@ export default {
         postImage: '',
       },
       comments : Object,
+      "user.userAvatar": '',
       
     }
   },

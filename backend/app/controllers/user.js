@@ -129,18 +129,36 @@ exports.updateUserProfile = (req, res, next) => {
     if (!user) {
       return res.status(404).json({ error: 'Utilisateur non trouvé' })
     }else{
-      //modifier l'utilisateur, ajouter/modifier userAvatar
-      User.update({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        userAvatar: (req.file)? `${req.protocol}://${req.get('host')}/app/images/${req.file.filename}`: null, 
-        },
-        {
-        where:  {userId: req.body.userId}
-        }
-      )
-      .then( () =>res.status(200).json({ message: 'Utilisateur modifié !'}))
-      .catch(error => res.status(400).json({ error }))
+      //modifier l'utilisateur, modifier userAvatar (supprimer l'ancienne image du fichier si userAvatar n'est pas null)
+      if(user.userAvatar !== null) {
+        const filename = user.userAvatar.split('/app/images/')[1];
+        fs.unlink(`app/images/${filename}`, () => {
+          User.update({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            userAvatar: (req.file)? `${req.protocol}://${req.get('host')}/app/images/${req.file.filename}`: null, 
+            },
+            {
+            where:  {userId: req.body.userId}
+            }
+          )
+          .then( () =>res.status(200).json({ message: 'Utilisateur modifié !'}))
+          .catch(error => res.status(400).json({ error }))
+        })
+      }else{
+        //modifier l'utilisateur si userAvatar est null, ajouter userAvatar
+        User.update({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          userAvatar: (req.file)? `${req.protocol}://${req.get('host')}/app/images/${req.file.filename}`: null, 
+          },
+          {
+          where:  {userId: req.body.userId}
+          }
+        )
+        .then( () =>res.status(200).json({ message: 'Utilisateur modifié !'}))
+        .catch(error => res.status(400).json({ error }))
+      }
     }
   })
   .catch(error => res.status(500).json({ error }));

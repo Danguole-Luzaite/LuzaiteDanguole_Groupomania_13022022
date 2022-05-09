@@ -3,7 +3,7 @@
     <v-card max-width="890"  class="mx-auto mb-3" outlined elevation="2" v-for="comment in comments.slice().reverse()" :key="comment.commentId">
       <v-row>
         <v-avatar size="35" class="ml-2 mt-1">
-            <v-img src='../assets/default_avatar.png' ></v-img>
+            <v-img v-bind:src="comment.User.userAvatar" alt="image de profil"/>
         </v-avatar>
         <v-card-subtitle>{{ comment.User.firstName }} {{ comment.User.lastName }}</v-card-subtitle>
         <v-spacer></v-spacer>
@@ -28,8 +28,11 @@ export default {
   name: 'TheComment',
   data () {
     return {
-      
       comments: [],
+      //userId: localStorage.getItem('userId'),
+      user: {},
+      "user.userAvatar": '',
+
     }
   },
 
@@ -72,3 +75,9 @@ export default {
 }
   
 </script>
+
+<style scoped>
+  .row{
+    margin: 0px;
+  }
+</style>

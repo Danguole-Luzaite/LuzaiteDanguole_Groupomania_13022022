@@ -19,7 +19,7 @@
               </validation-provider>
               <validation-provider name="Image">
                 <v-file-input outlined accept="image/*" v-model="post.postImage"  @change="selectFile()" label="Publier une image" ref="image" v-bind:src="post.postImage"></v-file-input>
-                <v-img contain max-height="200" max-width="300" v-bind:src="post.postImage"/>
+                <v-img contain max-height="200" max-width="300" v-bind:src="post.postImage" alt="image de post"/>
               </validation-provider>
               <v-divider></v-divider>
               <v-card-actions>

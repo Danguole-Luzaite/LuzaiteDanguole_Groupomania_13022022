@@ -1,7 +1,7 @@
 <template>
   <div id="navAccueil">
-    <v-app-bar app color="orange darken-4" dark>
-      <v-img max-height="130" contain src="@/assets/logos/icon-left-font-monochrome-white.png"></v-img>
+    <v-app-bar  color="orange darken-4" dark>
+      <v-img max-height="130" contain src="@/assets/logos/icon-left-font-monochrome-white.png" alt="le groupomania logo"></v-img>
       <v-spacer></v-spacer>
       <v-tabs right icons-and-text background-color="orange darken-4" class="mr-10">
         <v-tab text @click="goToAccueil">Accueil<v-icon>home</v-icon></v-tab>

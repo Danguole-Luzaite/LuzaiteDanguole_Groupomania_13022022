@@ -124,14 +124,10 @@ export default {
         this.messageAlert = 'utilisateur non trouvé';
         console.log('response est:' , error);
       })
-      //this.$router.push({ name: 'Accueil' })
     },
 
   },
-
-  computed: {
-
-  }
+  
 };
 </script>
 

@@ -8,7 +8,7 @@
               <v-list-item-title>{{ item.firstName }} {{ item.lastName }}</v-list-item-title>
             </v-list-item-content>
             <v-list-item-avatar>
-              <v-img :src="item.userAvatar"></v-img>
+              <v-img :src="item.userAvatar" alt="image de profil"></v-img>
             </v-list-item-avatar>
           </v-list-item>
         </v-list> 
@@ -33,7 +33,7 @@
                     <v-list-item-title>{{ item.firstName }} {{ item.lastName }}</v-list-item-title>
                   </v-list-item-content>
                   <v-list-item-avatar>
-                    <v-img :src="item.userAvatar"></v-img>
+                    <v-img :src="item.userAvatar" alt="image de profil"></v-img>
                   </v-list-item-avatar>
                 </v-list-item>
               </v-list> 

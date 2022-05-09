@@ -22,7 +22,7 @@
               <v-card color="grey lighten-5">
                 <v-card-text class="d-flex" align-center>
                   <v-avatar color="grey lighten-2" size="44" class="mr-5">
-                    <v-img src='../assets/default_avatar.png'></v-img>
+                    <v-img v-bind:src="user.userAvatar" alt="image de profil"/>
                   </v-avatar>
                   <v-card-subtitle>{{ user.firstName }} {{ user.lastName }}</v-card-subtitle>
                   <v-card-actions>
@@ -59,7 +59,7 @@ export default {
     user: {},
     "user.firstName": '',
     "user.lastName": '',
-    //"user.userAvatar": '', 
+    "user.userAvatar": '', 
     
   }),
 
