@@ -7,10 +7,24 @@
         </v-avatar>
         <v-card-subtitle>{{ comment.User.firstName }} {{ comment.User.lastName }}</v-card-subtitle>
         <v-spacer></v-spacer>
-        <!-- pour supprimer le comment créé -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn icon elevation="1" small @click="deleteTheComment(comment.commentId)" ><v-icon>mdi-close</v-icon></v-btn>
+          <!-- pour supprimer le comment créé, v-dialog -->
+          <v-dialog v-model="dialog" max-width="320px">
+            <template  v-slot:activator="{ on, attrs }">
+              <v-btn icon elevation="1" small v-bind="attrs" v-on="on"><v-icon>mdi-close</v-icon></v-btn>
+            </template>
+            <v-card>
+              <v-card-title>Supprimer le commentaire</v-card-title>
+              <v-card-text>Voulez-vous supprimer ce commentaire ?</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text @click="dialog = false">Anuller</v-btn>
+                <v-btn text color="orange darken-4" @click="deleteTheComment(comment.commentId)">Supprimer</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          
         </v-card-actions>
       </v-row>
       <v-divider></v-divider>
@@ -31,6 +45,7 @@ export default {
       comments: [],
       //userId: localStorage.getItem('userId'),
       user: {},
+      dialog: false,
       "user.userAvatar": '',
 
     }

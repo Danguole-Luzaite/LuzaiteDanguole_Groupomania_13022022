@@ -13,13 +13,14 @@
                   <v-avatar class="profile" color="grey" size="150">
                     <v-img v-bind:src="user.userAvatar"  alt="image de profil"/>
                   </v-avatar>
-                  <!-- Modifier la photo, v-dialog -->
+
+                  <!-- Modifier le profil, v-dialog -->
                   <v-dialog v-model="dialog" persistent max-width="600px">
                     <template v-slot:activator="{ on, attrs }"> 
-                      <v-btn  class="mt-2"  v-bind="attrs" v-on="on" >Modifier votre profil</v-btn>
+                      <v-btn  class="mt-2" text color="orange darken-4" v-bind="attrs" v-on="on" >Modifier votre profil</v-btn>
                     </template>
                     <v-card>
-                      <v-card-title>Modifier la photo de profil</v-card-title>
+                      <v-card-title>Modifier votre profil</v-card-title>
                       <!--<v-alert type="success" v-if="successAlert">Votre photo de profil a été modifié avec succès !</v-alert> -->
                       <v-card-text>
                         <v-container>
@@ -50,13 +51,9 @@
                                   
                   <v-card-title >{{ user.firstName }} {{ user.lastName }}</v-card-title>
                 </v-card-actions>
-
-                
-                
-                <!--<v-alert type="success" v-if="successAlert">Votre profil a été modifié avec succès !</v-alert> -->
-                <v-card-actions class="justify-space-between">
-                  <v-btn  block @click="goBack">Retourner à l'accueil</v-btn>
-                  <!--<v-btn  type="submit" @click="changeUserData(userId)">Sauvegarder les modifications</v-btn> -->
+                <v-alert type="success" v-if="successAlert">Votre profil a été modifié avec succès !</v-alert>
+                <v-card-actions>
+                  <v-btn  block fluid @click="goBack">Retourner à l'accueil</v-btn>
                 </v-card-actions>
               </form>
             </v-card-text>  
@@ -82,7 +79,7 @@ export default {
     "user.firstName": '',
     "user.lastName": '',
     "user.userAvatar": '',
-    //successAlert: false,
+    successAlert: false,
     
   }),
   
@@ -133,8 +130,8 @@ export default {
       .then(function (response) {
         console.log(response);
         if (response.status == 200) {
-          //this.successAlert = true;
           location.reload();
+          this.successAlert = true;
         }
       })
       .catch(function (error) {
