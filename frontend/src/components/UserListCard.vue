@@ -32,6 +32,24 @@
                   <v-list-item-content>
                     <v-list-item-title>{{ item.firstName }} {{ item.lastName }}</v-list-item-title>
                   </v-list-item-content>
+                  <!-- Supprimer l'utilisateur, v-dialog -->
+                  <v-list-item-content>
+                    <v-dialog v-model="dialogDeleteUser"  max-width="300px">
+                      <template v-slot:activator="{ on, attr }">
+                        <v-list-item-action>
+                          <v-btn text small v-bind="attr" v-on="on">Souhaitez-vous supprimer ce compte?</v-btn>
+                        </v-list-item-action>
+                      </template>
+                      <v-card>
+                        <v-card-text class="red--text">Êtes-vous sûr de vouloir supprimer ce compte ?</v-card-text>
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text @click="dialogDeleteUser = false">Anuller</v-btn>
+                        <v-btn text color="orange darken-4" @click="deleteUser(item.userId)">Supprimer</v-btn>
+                      </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </v-list-item-content>
                   <v-list-item-avatar>
                     <v-img :src="item.userAvatar" alt="image de profil"></v-img>
                   </v-list-item-avatar>
@@ -57,6 +75,7 @@ export default {
   data () {
     return{
       dialog: false,
+      dialogDeleteUser: false,
       showLessUsers: false,
        users:[
       {
@@ -79,6 +98,28 @@ export default {
     .catch(error => {
       console.log(error)
     })
+  },
+
+  methods: {
+    //Axios Api pour supprimer
+    deleteUser(userId) {
+     instance.delete('/users/' + userId, 
+     {
+       headers: {
+          'content-type': 'application/json',
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+     })
+     .then(response => {
+        if (response.status == 200){
+          location.reload();
+        }
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+   }
   },
 
 };

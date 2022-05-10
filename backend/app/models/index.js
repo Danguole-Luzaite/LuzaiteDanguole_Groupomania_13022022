@@ -21,7 +21,7 @@ db.comment = require('./comment')(sequelize, Sequelize);
 db.user.hasMany(db.post, {
   foreignKey: {
     name: 'userId',
-    allowNull: false
+    allowNull: false,
   }
 });
 db.post.belongsTo(db.user, {
@@ -35,19 +35,19 @@ db.post.belongsTo(db.user, {
 db.comment.belongsTo(db.user, {
   foreignKey: {
     name: 'userId',
-    allowNull: false
+    allowNull: false,
   }
 });
 db.user.hasMany(db.comment, {
   foreignKey: {
     name: 'userId',
-    allowNull: false
+    allowNull: false,
   }
 });
 db.post.hasMany(db.comment, {
   foreignKey: {
     name: 'postId',
-    allowNull: false
+    allowNull: false,
   }
 });
 
@@ -58,6 +58,6 @@ db.comment.belongsTo(db.post, {
   }
 });
 
-
+//onDelete: 'cascade'
 
 module.exports = db;

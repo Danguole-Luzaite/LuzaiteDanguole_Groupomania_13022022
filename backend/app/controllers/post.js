@@ -129,13 +129,13 @@ exports.modifyPost = (req, res, next) => {
 //Supprimer un Post avec l'id spécifié :
 exports.deletePost = (req, res, next) => {
   //vérifier que le post existe
-  console.log("postId est supprime : ", req.params.postId)
+  console.log("postId est supprimé : ", req.params.postId)
   Post.findByPk( req.params.postId )
   .then((post) => {
     if (!post) {
       return res.status(404).json({ error: 'Post non trouvé !' })
     }
-    console.log("le post supprime est : ", post)
+    console.log("le post supprimé est : ", post)
     if(post.userId !== req.auth.userId){
       return res.status(400).json({ error: new Error( 'La requête non autorisée' )}) 
     }else{

@@ -9,7 +9,7 @@
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <!-- pour supprimer le comment créé, v-dialog -->
+          <!-- pour supprimer le comment, v-dialog -->
           <v-dialog v-model="dialog" max-width="320px">
             <template  v-slot:activator="{ on, attrs }">
               <v-btn icon elevation="1" small v-bind="attrs" v-on="on"><v-icon>mdi-close</v-icon></v-btn>
@@ -23,8 +23,7 @@
                 <v-btn text color="orange darken-4" @click="deleteTheComment(comment.commentId)">Supprimer</v-btn>
               </v-card-actions>
             </v-card>
-          </v-dialog>
-          
+          </v-dialog> 
         </v-card-actions>
       </v-row>
       <v-divider></v-divider>
@@ -47,12 +46,12 @@ export default {
       user: {},
       dialog: false,
       "user.userAvatar": '',
-
     }
   },
 
   props:{
     postId: Number,
+    comment: Object,
   },
 
   mounted() {

@@ -163,3 +163,31 @@ exports.updateUserProfile = (req, res, next) => {
   })
   .catch(error => res.status(500).json({ error }));
 }
+
+//supprimer un utilisateur :
+exports.deleteUser = (req, res) => {
+  //vérifier que l'utilisateur existe
+  User.findOne({ where: {userId: req.params.userId} })
+  .then((user) => {
+    if (!user) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé !' });
+    }else{
+      //supprimer l'ancienne image du fichier si userAvatar n'est pas null
+      if(user.userAvatar !== null) {
+        const filename = user.userAvatar.split('/app/images/')[1];
+        fs.unlink(`app/images/${filename}`, () => {
+          //supprimer l'utilisateur, par userId
+          User.destroy({where: { userId: req.params.userId }})
+          .then(() => res.status(200).json({ message: 'l utilisateur supprimé avec succès !'}))
+          .catch(error => res.status(400).json({ error }))
+        });
+      }else{
+        //supprimer l'utilisateur, par userId (si userAvatar est null)
+        User.destroy({where: { userId: req.params.userId }})
+        .then(() => res.status(200).json({ message: 'l utilisateur supprimé avec succès !'}))
+        .catch(error => res.status(400).json({ error })) 
+      }
+    }
+  })
+  .catch(error => res.status(500).json({ error }));  
+}

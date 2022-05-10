@@ -72,7 +72,6 @@ export default {
         postImage: '',
       },
       comments : Object,
-      "user.userAvatar": '',
       
     }
   },
