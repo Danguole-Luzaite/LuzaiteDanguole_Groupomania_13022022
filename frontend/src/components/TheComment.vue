@@ -1,6 +1,6 @@
 <template>
   <v-container id="TheComment">
-    <v-card max-width="890"  class="mx-auto mb-3" outlined elevation="2" v-for="comment in comments.slice().reverse()" :key="comment.commentId">
+    <v-card max-width="890"  class="mx-auto mb-3" outlined elevation="2" v-for="comment in comments" :key="comment.commentId">
       <v-row>
         <v-avatar size="35" class="ml-2 mt-1">
             <v-img v-bind:src="comment.User.userAvatar" alt="image de profil"/>
@@ -12,7 +12,7 @@
           <!-- pour supprimer le comment, v-dialog -->
           <v-dialog v-model="dialog" max-width="320px">
             <template  v-slot:activator="{ on, attrs }">
-              <v-btn icon elevation="1" small v-bind="attrs" v-on="on"><v-icon>mdi-close</v-icon></v-btn>
+              <v-btn icon elevation="1" small v-bind="attrs" v-on="on"><v-icon class='material-icons'>delete</v-icon></v-btn>
             </template>
             <v-card>
               <v-card-title>Supprimer le commentaire</v-card-title>
@@ -45,13 +45,11 @@ export default {
       //userId: localStorage.getItem('userId'),
       user: {},
       dialog: false,
-      "user.userAvatar": '',
     }
   },
 
   props:{
     postId: Number,
-    comment: Object,
   },
 
   mounted() {

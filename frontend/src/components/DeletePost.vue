@@ -7,7 +7,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon elevation="1" small v-bind="attrs" v-on="on">
-          <v-icon>mdi-close</v-icon>
+          <v-icon class='material-icons-round'>delete</v-icon>
         </v-btn>
       </template>
       <v-card>

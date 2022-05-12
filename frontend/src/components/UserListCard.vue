@@ -37,7 +37,7 @@
                     <v-dialog v-model="dialogDeleteUser"  max-width="300px">
                       <template v-slot:activator="{ on, attr }">
                         <v-list-item-action>
-                          <v-btn text small v-bind="attr" v-on="on">Souhaitez-vous supprimer ce compte?</v-btn>
+                          <v-btn color="primary" small v-bind="attr" v-on="on">Souhaitez-vous supprimer ce compte?</v-btn>
                         </v-list-item-action>
                       </template>
                       <v-card>
