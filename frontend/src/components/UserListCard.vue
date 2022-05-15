@@ -3,7 +3,7 @@
     <v-card app max-width="400" class="mx-auto" outlined elevation="1">
         <v-list>
           <!-- Afficher jusqu'à 5 utilisateur -->
-          <v-list-item v-for="item in (showLessUsers? users: users.slice(0, 5))" :key="item.userId" >
+          <v-list-item v-for="item in (showMoreUsers? users: users.slice(0, 5))" :key="item.userId" >
             <v-list-item-content>
               <v-list-item-title>{{ item.firstName }} {{ item.lastName }}</v-list-item-title>
             </v-list-item-content>
@@ -16,7 +16,7 @@
           <!-- dialog pour afficher tous les utilisateurs -->
           <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn text color="orange darken-4" @click="showLessUsers = false" v-bind="attrs" v-on="on">Afficher plus d'utilisateurs</v-btn>
+              <v-btn text color="orange darken-4" @click="showMoreUsers = false" v-bind="attrs" v-on="on">Afficher plus d'utilisateurs</v-btn>
             </template>
             <v-card class="mx-auto" outlined elevation="3">
               <v-toolbar dark color="orange darken-4">
@@ -65,9 +65,7 @@
 <script>
 // Axios
 const axios = require('axios');
-const instance = axios.create({
-  baseURL: 'http://localhost:3000/api/auth/'
-});
+
 
 export default {
   name: 'UserListCard',
@@ -76,24 +74,24 @@ export default {
     return{
       dialog: false,
       dialogDeleteUser: false,
-      showLessUsers: false,
+      showMoreUsers: false,
        users:[
-      {
-        firstName: '',
-        lastName: '',
-        userAvatar: '',
-      },
+        {
+          firstName: '',
+          lastName: '',
+          userAvatar: '',
+        },
       ],
+      item: {},
     }
    
   },
   
   mounted() {
     //Axios Api pour obtenir tous les users
-    instance.get('/users')
+    axios.get('http://localhost:3000/api/auth/users')
     .then(response => {
       return this.users = response.data;
-      //console.log(response.data)
     })
     .catch(error => {
       console.log(error)
@@ -103,7 +101,7 @@ export default {
   methods: {
     //Axios Api pour supprimer
     deleteUser(userId) {
-     instance.delete('/users/' + userId, 
+     axios.delete(`http://localhost:3000/api/auth/users/${userId}`, 
      {
        headers: {
           'content-type': 'application/json',
@@ -111,10 +109,10 @@ export default {
         }
      })
      .then(response => {
+       console.log(response);
         if (response.status == 200){
-          location.reload();
+          this.$router.push({ name: 'Connexion' })
         }
-        console.log(response);
       })
       .catch(function (error) {
         console.log(error);

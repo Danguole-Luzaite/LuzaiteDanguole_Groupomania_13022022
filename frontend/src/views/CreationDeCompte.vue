@@ -3,7 +3,7 @@
     <the-navigation/>
 
     <v-main>
-      <v-content>
+      
         <v-card elevation="4" max-width="550" class="mx-auto">
           
             <v-card-title class="justify-center">Inscription</v-card-title>
@@ -45,7 +45,7 @@
             </v-card-text>
 
         </v-card>
-      </v-content>
+      
     </v-main>
     <the-footer/>
   </div>

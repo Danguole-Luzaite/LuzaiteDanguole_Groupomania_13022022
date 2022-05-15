@@ -3,7 +3,6 @@
     <the-navigation/>
 
     <v-main>
-      <v-content>
         <v-container class="mb-10 text-center">
           <h1>Bienvenue sur le réseau social interne pour les employés de Groupomania.</h1>
         </v-container>
@@ -51,7 +50,6 @@
               </v-card-actions>
             </v-card-text>         
         </v-card>
-      </v-content>
     </v-main>
     <the-footer/>
   </div>

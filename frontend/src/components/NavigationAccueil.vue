@@ -5,7 +5,11 @@
       <v-spacer></v-spacer>
       <v-tabs right icons-and-text background-color="orange darken-4" class="mr-10">
         <v-tab text @click="goToAccueil">Accueil<v-icon>home</v-icon></v-tab>
-        <v-tab text @click="goToProfile">Mon profil<v-icon>account_circle</v-icon></v-tab>
+        <v-tab text @click="goToProfile">Mon profil
+          <v-avatar size="30">
+            <v-img v-bind:src="user.userAvatar" alt="image de profil"/>
+          </v-avatar>
+        </v-tab>
         <v-tab text @click="backToLogin">Se déconnecter<v-icon>logout</v-icon></v-tab>
       </v-tabs> 
     </v-app-bar>
@@ -14,10 +18,33 @@
 
 
 <script>
+const axios = require('axios');
 
 export default {
   name: 'navAccueil',
-  
+
+  data: () => ({
+    user: {},
+    userId: localStorage.getItem('userId'),
+  }),
+
+  mounted(userId) {
+    //Axios Api pour obtenir seul utilisateur
+    axios.get('http://localhost:3000/api/auth/users/' + this.userId, 
+    {
+      params: {
+          userId
+        }
+    })
+    .then(response => {
+      return this.user = response.data;
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  },
+
+
   methods: {
     goToAccueil() {
       this.$router.push({ name: 'Accueil' })
