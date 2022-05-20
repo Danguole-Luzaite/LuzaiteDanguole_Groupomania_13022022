@@ -14,7 +14,8 @@
         </v-list> 
         <v-card-actions>
           <!-- dialog pour afficher tous les utilisateurs -->
-          <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+          <!-- <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"> -->
+          <v-dialog v-model="dialog" max-width="1000px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn text color="orange darken-4" @click="showMoreUsers = false" v-bind="attrs" v-on="on">Afficher plus d'utilisateurs</v-btn>
             </template>
@@ -29,6 +30,10 @@
               <!-- Liste pour tous les utilisateurs -->
               <v-list>
                 <v-list-item v-for="item in users" :key="item.userId" >
+                  <!-- Avatar d'utilisateur -->
+                  <v-list-item-avatar>
+                    <v-img :src="item.userAvatar" alt="image de profil"></v-img>
+                  </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title>{{ item.firstName }} {{ item.lastName }}</v-list-item-title>
                   </v-list-item-content>
@@ -37,11 +42,11 @@
                     <v-dialog v-model="dialogDeleteUser"  max-width="300px">
                       <template v-slot:activator="{ on, attr }">
                         <v-list-item-action>
-                          <v-btn color="primary" small v-bind="attr" v-on="on">Souhaitez-vous supprimer ce compte?</v-btn>
+                          <v-btn color="primary" small v-bind="attr" v-on="on">Suppression de compte</v-btn>
                         </v-list-item-action>
                       </template>
                       <v-card>
-                        <v-card-text class="red--text">Êtes-vous sûr de vouloir supprimer ce compte ?</v-card-text>
+                        <v-card-text class="red--text pt-2 subtitle-2">Êtes-vous sûr de vouloir supprimer ce compte ?</v-card-text>
                         <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn text @click="dialogDeleteUser = false">Anuller</v-btn>
@@ -50,11 +55,8 @@
                       </v-card>
                     </v-dialog>
                   </v-list-item-content>
-                  <v-list-item-avatar>
-                    <v-img :src="item.userAvatar" alt="image de profil"></v-img>
-                  </v-list-item-avatar>
                 </v-list-item>
-              </v-list> 
+              </v-list>
             </v-card>
           </v-dialog>
         </v-card-actions>

@@ -38,10 +38,9 @@
                             ></v-file-input>
                             <v-img contain max-height="200" class="mb-4" v-bind:src="user.userAvatar"  alt="image de profil"/>
                             <v-divider></v-divider>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
+                            <v-card-actions class="d-flex flex-wrap">
                               <v-btn color="grey darken-4" text @click="dialog = false">Retourner</v-btn>
-                              <v-btn type="submit" color="orange darken-4" text  @click="changeUserData(userId)">Sauvegarder les modifications</v-btn>
+                              <v-btn type="submit" color="orange darken-4" text  @click="changeUserData(userId)">Sauvegarder</v-btn>
                             </v-card-actions>
                           </v-form>
                         </v-container>

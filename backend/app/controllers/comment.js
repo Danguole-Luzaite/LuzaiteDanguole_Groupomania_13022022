@@ -4,7 +4,6 @@ const User = db.user;
 const Comment = db.comment;
 
 
-
 // créer un commentaire :
 exports.createComment = (req, res, next) => {
   //trouver l'utilisateur
@@ -34,7 +33,8 @@ exports.createComment = (req, res, next) => {
 };
 
 
-//Récupérer tous les commentaires :
+
+//Récupérer tous les commentaires par postId :
 exports.getCommentsByPostId = (req, res, next) => {
   Comment.findAll({ where: {
     postId: req.params.postId
@@ -50,6 +50,22 @@ exports.getCommentsByPostId = (req, res, next) => {
   })
 };
 
+/*
+///Récupérer un seul commentaire par commentId :
+exports.getOneCommentByPostId = (req, res, next) => {
+  Comment.findByPk(req.params.commentId)
+  .then(data => {
+    if (data) {
+      res.status(200).send(data);
+    }else{
+      res.status(404).send({ message: 'Le commentaire non trouvé !' });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({ message: "Erreur lors de la récupération de commentaire !" })
+  });
+};
+*/
 
 // Supprimer un commentaire avec l'id spécifié :
 exports.deleteComment = (req, res, next) => {

@@ -4,9 +4,9 @@
     <nav-accueil/>
     <v-main>
       <v-container fluid>
-        <v-row class="mb-9">
+        <v-row class="mb-9 justify-center">
           <!-- Liste des membres -->
-          <v-col cols="12" sm="3">
+          <v-col cols="12" sm="5" md="4" xl="3">
             <v-card min-height="268" class="deep-orange lighten-5" elevation="3">
               <v-card-title class="justify-center">Liste des membres</v-card-title>
               <v-divider class="mb-2"></v-divider>
@@ -14,13 +14,13 @@
             </v-card>
           </v-col>
           <!-- Les postes -->
-          <v-col cols="12" sm="6">
+          <v-col cols="12" sm="7" md="7">
             <v-card min-height="70vh" class="deep-orange lighten-5" elevation="6">
               <v-card-title class="justify-center">Les postes</v-card-title>
               <v-divider></v-divider>
               <!-- Card : Déposer un nouveau post -->
               <v-card color="grey lighten-5">
-                <v-card-text class="d-flex" align-center>
+                <v-card-text class="d-flex flex-wrap align-center">
                   <v-avatar color="grey lighten-2" size="44" class="mr-5">
                     <v-img v-bind:src="user.userAvatar" alt="image de profil"/>
                   </v-avatar>

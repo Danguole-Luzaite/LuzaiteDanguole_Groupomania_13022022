@@ -1,7 +1,7 @@
 <template>
   <v-dialog id="CreateNewPost" v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" color="grey darken-4" block large class="white--text">Publier une image/Gif</v-btn>                  
+      <v-btn v-bind="attrs" v-on="on" color="grey darken-4"  class="white--text">Publier un article</v-btn>                  
     </template>
     <v-card>
       <v-card-title>Créer un nouveau post</v-card-title>

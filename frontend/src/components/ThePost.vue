@@ -1,6 +1,6 @@
 <template>
   <v-container id="ThePost" fluid class="mb-5">
-    <v-card app max-width="900" max-height="750" class="mx-auto mb-4" outlined elevation="2" v-for="post in posts.slice().reverse()" :key="post.postId">
+    <v-card app max-width="900" class="mx-auto mb-4" outlined elevation="2" v-for="post in posts.slice().reverse()" :key="post.postId">
       <v-row >
         <v-avatar size="44" class="ml-2 mt-1">
           <v-img v-bind:src="post.User.userAvatar" alt="image de profil"/>
@@ -31,12 +31,16 @@
         <v-btn icon elevation="1" class="mx-2" color="deep-orange">
           <v-icon>mdi-thumb-up</v-icon>
         </v-btn>
-
         <!-- postuler un comment-->
         <create-comment :post="post"/>
       </v-card-actions>
-      <!-- afficher les comments-->
-      <the-comment  :postId="post.postId" />
+      <v-card>
+        <v-card-text class="pl-0 pr-0 pl-md-2 pr-md-2">
+          <!-- afficher les comments-->
+          <the-comment  :postId="post.postId" />
+        </v-card-text>
+      </v-card>
+      
 
     </v-card>
   </v-container>
