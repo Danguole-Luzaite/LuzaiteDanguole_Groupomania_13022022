@@ -15,9 +15,10 @@
         <v-card-actions>
           <!-- dialog pour afficher tous les utilisateurs -->
           <!-- <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"> -->
-          <v-dialog v-model="dialog" max-width="1000px">
+          <v-dialog v-model="dialog" fullscreen hide-overlay max-width="1000px">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn text color="orange darken-4" @click="showMoreUsers = false" v-bind="attrs" v-on="on">Afficher plus d'utilisateurs</v-btn>
+              <v-btn text color="orange darken-4" @click="showMoreUsers = false" v-bind="attrs" v-on="on" class="d-none d-md-block">Afficher plus d'utilisateurs</v-btn>
+              <v-btn text color="orange darken-4" @click="showMoreUsers = false" v-bind="attrs" v-on="on" class="d-md-none">Afficher plus</v-btn>
             </template>
             <v-card class="mx-auto" outlined elevation="3">
               <v-toolbar dark color="orange darken-4">
@@ -42,7 +43,11 @@
                     <v-dialog v-model="dialogDeleteUser"  max-width="300px">
                       <template v-slot:activator="{ on, attr }">
                         <v-list-item-action>
-                          <v-btn color="primary" small v-bind="attr" v-on="on">Suppression de compte</v-btn>
+                          <v-btn color="primary" small v-bind="attr" v-on="on" class="d-none d-sm-block">Suppression de compte</v-btn>
+                          <!-- version mobile  -->
+                          <v-btn icon color="primary" small v-bind="attr" v-on="on" class="d-sm-none">
+                            <v-icon class='material-icons-round'>delete</v-icon>
+                          </v-btn>
                         </v-list-item-action>
                       </template>
                       <v-card>
@@ -103,7 +108,7 @@ export default {
   methods: {
     //Axios Api pour supprimer
     deleteUser(userId) {
-     axios.delete(`http://localhost:3000/api/auth/users/${userId}`, 
+     axios.delete(`http://localhost:3000/api/auth/users/`+ userId, 
      {
        headers: {
           'content-type': 'application/json',

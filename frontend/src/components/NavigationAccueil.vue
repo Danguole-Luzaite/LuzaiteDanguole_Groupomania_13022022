@@ -3,13 +3,12 @@
    
     <v-card class="mx-auto overflow-hidden" height="145">
       <v-app-bar  color="orange darken-4" dark>
-        <v-app-bar-nav-icon class="hidden-sm-and-up" @click="drawer = true" ></v-app-bar-nav-icon> 
-        <!-- @click="drawer = true" -->
+        <v-app-bar-nav-icon class="hidden-sm-and-up" @click="drawer = true" ></v-app-bar-nav-icon>
         <v-img max-height="130" max-width="165" contain
         src="@/assets/logos/icon-left-font-monochrome-white.png" alt="le groupomania logo"></v-img>
         <v-spacer></v-spacer>
-        <v-tabs right icons-and-text background-color="orange darken-4" class="mr-10" >
-          <v-tab text @click="goToAccueil">Accueil<v-icon>home</v-icon></v-tab>
+        <v-tabs right icons-and-text background-color="orange darken-4" class="mr-10 d-none d-sm-block " >
+          <v-tab text  @click="goToAccueil">Accueil<v-icon>home</v-icon></v-tab>
           <v-tab text @click="goToProfile">Mon profil
             <v-avatar size="30">
               <v-img v-bind:src="user.userAvatar" alt="image de profil"/>
@@ -19,7 +18,7 @@
         </v-tabs> 
       </v-app-bar>
       <!-- v-navigation-drawer en version mobile -->
-      <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-navigation-drawer v-model="drawer" absolute temporary class="hidden-sm-and-up">
         <v-list nav dense>
           <v-list-item-group v-model="group"
           active-class="orange--text text--accent-3">
@@ -97,3 +96,10 @@ export default {
 
 }; 
 </script>
+
+<style scoped>
+  .v-tab{
+    padding-left: 8px;
+    padding-right: 8px;
+  };
+</style>

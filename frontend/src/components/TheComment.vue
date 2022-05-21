@@ -9,6 +9,7 @@
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-spacer></v-spacer>
+
           <!-- pour modifier le comment, v-dialog -->
           <v-dialog v-model="dialogModify" max-width="400px">
             <template v-slot:activator="{ on, attrs }">
@@ -72,12 +73,11 @@ export default {
   data () {
     return {
       comments: [],
-      comment: {},
-      //userId: localStorage.getItem('userId'),
+      comment: {commentMessage: this.commentMessage},
       user: {},
       dialog: false,
       dialogModify: false,
-      "comment.commentMessage": '',
+      //"comment.commentMessage": '',
     }
   },
 
@@ -121,7 +121,8 @@ export default {
     modifyTheComment(commentId){
       axios.put('http://localhost:3000/api/comments/'+ commentId + '/' + JSON.parse(localStorage.getItem('userId')),
         {
-          commentMessage: this.comment.commentMessage
+          commentMessage: this.comment.commentMessage,
+          userId: this.userId
         },
         {
           headers: {
